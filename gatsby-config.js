@@ -1,3 +1,7 @@
+require('dotenv').config({
+	path: `.env.${process.env.NODE_ENV}`
+});
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -6,6 +10,15 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    'gatsby-plugin-stripe',
+    {
+			resolve: `gatsby-source-stripe`,
+			options: {
+				objects: [ 'Sku' ],
+				secretKey: process.env.STRIPE_SECRET_KEY,
+				downloadFiles: true
+			}
+		},
     {
       resolve: `gatsby-source-filesystem`,
       options: {
